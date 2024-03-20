@@ -1,0 +1,929 @@
+
+Constant Objects
+
+==>To create constant object use const keyword.
+
+==>When we create an object using the const keyword, the value of data members can never change till the life of the object in a program. The const objects are also known as the read-only objects.
+
+==>constant objects invokes only constant member function. But a non constant object can invoke both i.e constant  as well as non constant function.
+
+Syntax
+const class_name obj_name;  
+ex: const Complex c1(1,2);
+
+
+
+Example: Let's create a program to use the constant objects in the C++ programming language.
+
+#include <iostream>  
+using namespace std;  
+class ABC  
+{  
+public:  
+int A;    
+ABC ()  
+{  
+A = 10; 
+}  
+};  
+int main ()  
+{  
+const ABC obj;  
+cout << " The value of A: " << obj.A << endl;  
+// obj.A = 20; // It returns a compile time error  
+return 0;  
+}  
+Output
+
+The value of A: 10
+In the above program, we assign the value of A is 10, the compiler prints "The value of A: 10", and when we assign the value of A to 20, the object of the class returns the compile time error in the program.
+=================================================================================================
+ Constant Member function 
+
+==>To make a member function constant,use const keyword. 
+==>We can create a constant member function of a class by adding the const keyword after the name of the member function.
+Syntax
+
+return_type mem_fun() const  
+{  
+}   
+In the above syntax, mem_fun() is a member function of a class, and the const keyword is used after the name of the member function to make it constant.
+
+==>Those functions that do not alter the values of the data members, or the functions that are 'read only' can be made constant.
+
+==>If a function is declared as const and the implementation of that function tries to change the object by changing the value of any of its members,the compiler flags an error.
+
+Example: Program to use the const keyword with the member function of class
+class ABC  
+{  
+ 
+public:  
+int A;  
+void fun () const  
+{  
+ A = 10; // it shows compile time error  
+}  
+};  
+  
+int main ()  
+{  
+    ABC obj;  
+    obj.fun();  
+    return 0;  
+}  
+Output
+The above code throws a compilation error because the fun() function is a const member function of class ABC, and we are trying to assign a value to its data member 'x' that returns an error.
+
+===================================================================
+// Constant member function defined outside the class
+#include <iostream>
+using namespace std;
+ 
+class Demo {
+    int x;
+ 
+public:
+    void set_data(int);
+    int get_data() const;
+};
+ void Demo::set_data(int a) 
+{
+ x = a;
+ }
+int Demo::get_data() const 
+{
+ return x; 
+}
+main()
+{
+    Demo d;
+    d.set_data(10);
+    cout << d.get_data();
+ 
+    return 0;
+}
+
+Output
+10
+
+==================================================================================
+// C++ program to demonstrate that const functions can be  called by non const objects
+ 
+#include <iostream>
+using namespace std;
+ 
+class Test {
+    int value;
+ public:
+    Test(int v = 0)
+ { value = v; 
+}
+     int getValue() const
+ { return value; 
+}
+};
+ 
+int main()
+{
+    Test t(20);
+    cout << t.getValue();
+    return 0;
+}
+Output
+20
+================================================================
+// C++ program that demonstrate that non-const functions can not be called by const objects
+ #include <iostream>
+using namespace std;
+ class Test {
+    int value;
+ 
+public:
+    Test(int v = 0) { value = v; }
+ 
+    // non const member function
+    int getValue() { return value; }
+};
+ int main()
+{
+    // const object
+    const Test t;
+    cout << t.getValue();
+    return 0;
+}
+//ERROR
+=====================================================================
+// Demonstration of constant object show that constant object can only call const member function
+ 
+#include <iostream>
+using namespace std;
+class Demo {
+    int value;
+ 
+public:
+    Demo(int v = 0) { value = v; }
+    void showMessage()
+    {
+        cout << "Hello World  Inside showMessage() Function";
+    }
+     // const member function
+    void display() const
+    {
+        cout << "Hello world ";
+    }
+};
+int main()
+{
+    
+    const Demo d1;
+     d1.showMessage();
+    d1.display();
+
+}
+================================================================
+Constant function Arguments
+We can declare the function arguments as the constant argument using the const keyword. And if the value of function arguments is declared const, it does not allow changing its value.
+
+Syntax
+
+return_type fun_name (const int x)  
+{  
+}   
+The fun_name() function contains a const argument whose value can never be changed once it defines in the program.
+
+Example: Let's consider an example to use the const keyword with function arguments in the C++ programming language.
+
+#include <iostream>  
+using namespace std;  
+int Test (const int num)  
+{  
+// if we change the value of the const argument, it throws an error.  
+// num = num + 10;  
+cout << " The value of num: " << num << endl;  
+return 0;  
+}  
+int main ()  
+{  
+// call function  
+Test(5);  
+}  
+Output
+
+The value of num: 5
+In the above program, the num is a constant argument, and we cannot update the num value. If we update the value of the num variable, it returns the compile-time error.
+
+================================================================================
+
+FAQ on constant object:
+Q1. Can const objects of a class call non-const member functions?
+Answer:
+No,an object declared as const cannot be modified and hence, can invoke only const member functions as these functions ensure not to modify the object.
+
+Q2. Can non-const objects of a class call const member function?
+Answer:
+When a function is declared as const, it can be called on any type of object.
+=============================================================================
+
+imp:
+Note: A constant member function can be overloaded with a function of same name.
+ex:
+void func() const;
+void func();
+
+class temp
+{
+public:
+	void show();
+	void show() const;
+};
+void temp::show()
+{
+	cout<<"in non constant show";
+}
+void temp::show()const
+{
+	cout<<"in  constant show";
+}
+int main()
+{
+	 temp t;
+	t.show();
+}
+
+In this case, constness of the object will determoine which functions should  be invoked.
+
+
+
+===============================================================================
+
+
+
+Constructor:
+
+Sequence after creation of object
+1)memory  allocated by the compiler 
+2)constructor invocation by compiler
+3)memory initialization by constructor
+
+==>Constructor in C++ is a special method that is invoked automatically at the time of object creation. It is used to initialize the data members of newly created objects.
+==>The constructor in C++ has the same name as the class. It constructs the values i.e. provides data for the object which is why it is known as constructor.
+==>Constructor do not return value, hence they do not have a return type not even void.
+==>==>Constructor cannot be constant member function.
+ 
+
+The prototype of the constructor looks like 
+     <class-name> (list-of-parameters);
+
+Constructor can be defined inside the class declaration or outside the class declaration
+a.    Syntax for defining the constructor within the class
+
+        <class-name>(list-of-parameters)
+        {
+                  //constructor definition
+        }
+
+b.    Syntax for defining the constructor outside the class
+
+        <class-name>: :<class-name>(list-of-parameters)
+        {
+                //constructor definition
+        }
+
+ Types of Constructors
+Default Constructors: 
+==>The constructor which doesn’t take any argument. It has no parameters. It is also called as no argument constructor.
+==>If constructor is not defined in the source code by the programmer, then the compiler defined the default constructor implicitly during compilation and initilizes data members of class to garbage values.
+==>There can be only one no argument constructor per class.
+
+
+
+#include<iostream>
+using namespace std;
+class MyDate
+{
+	int dd,mm,yy;
+public:
+	MyDate();
+	void display();
+	MyDate(int,int,int);
+};
+void MyDate::display()
+{
+	cout<<"date is "<<dd<<"/"<<mm<<"/"<<yy<<endl;
+}
+MyDate::MyDate()
+{
+	cout<<"in default constructor of mydate()\n";
+	dd=19;
+	mm=3;
+	yy=24;
+}
+MyDate::MyDate(int d,int m,int y)
+{
+	cout<<"in par constructor of mydate class\n";
+	dd=d;
+	mm=m;
+	yy=y;
+}
+int main()
+{
+	MyDate d1;
+	d1.display();
+	MyDate d2(20,3,24);
+	d2.display();
+}
+
+======================================================
+#include<iostream>
+using namespace std;
+class student
+{
+    int rno;
+    char name[50];
+    double fee;
+    public:
+    student()
+    {
+        cout<<"Enter the RollNo:";
+        cin>>rno;
+        cout<<"Enter the Name:";
+        cin>>name;
+        cout<<"Enter the Fee:";   
+        cin>>fee;
+    }   
+      void display()
+    {
+        cout<<endl<<rno<<"\t"<<name<<"\t"<<fee;
+    }
+};
+ int main()
+{
+    student s;  //constructor gets called automatically when we create the object of the class
+    s.display();
+    return 0;
+}
+====================================================================================
+2. Parameterized Constructors: 
+
+==>A constructor with parameters is called as parametrized constructor.
+ ==> It is used to provide different values to distinct objects.
+==>If Parametrized constructor is not defined in the source code by the programmer, then the compiler cannot defined the default copy of Parametrized constructor implicitly during compilation.
+==>Constructors can be overloaded with different signatures.
+Note: when the parameterized constructor is defined and no default constructor is defined explicitly, the compiler will not implicitly call the default constructor and hence creating a simple object as
+Complex c;
+Will flash an error
+
+class student
+{
+    int rno;
+    char name[50];
+    double fee;
+ 
+      public:
+    student(int,char[],double);
+    void display();
+     
+};
+ 
+student::student(int no,char n[],double f)
+{
+    rno=no;
+    strcpy(name,n);
+    fee=f;
+}   
+ 
+void student::display()
+{
+    cout<<endl<<rno<<"\t"<<name<<"\t"<<fee;
+}
+     
+int main()
+{
+    student s(1001,"Ram",10000);
+    s.display();
+    return 0;
+}
+
+---------------------------------------------------------------------------------------
+
+Excercise 1:
+#include <iostream>
+using namespace std;
+ class Point {
+    Point() { cout << "Constructor called"; }
+};
+int main()
+{
+    Point t1;
+    return 0;
+}
+
+Excercise 2:
+#include<iostream>
+using namespace std;
+class Point {
+public:
+    Point() { cout << "Constructor called"; }
+};
+int main()
+{
+   Point t1, *t2;
+   return 0;
+}
+
+
+
+**************************************************************************
+This Keyword
+
+Each object gets its own copy of data members and all objects share a single copy of member functions.
+Then now question is that if only one copy of each member function exists and is used by multiple objects, how are the proper data members are accessed and updated?
+The compiler supplies an implicit pointer along with the names of the functions as 'this'.
+
+==>whenever an object invokes member function,the address of that object is passed implicitly to the function as a hidden parameter . this pointer holds the address of the current object that invokes the fuction.
+==>It is a constant pointer. The type of this pointer for the object cdate d1 will  be
+cdate * const this; //it is a constant pointer to cdate object.
+==>This pointer is used to retrieve objects address. In c to find out variable address,we use & symbol.in c++,to know current object address, this pointer is used.
+
+==>this pointer is use to distinguish our data members from local variables when both are declared with the same name.To identify datamembers this pointer is used.
+==>every non static members function of c++ is having one hidden parameter called as this. static members function never contains this.
+
+
+Let's see the example of this keyword in C++ that refers to the fields of current class.
+#include<iostream>
+using namespace std;
+class test
+{
+int a,b;
+public:
+void show()
+{
+a=10;
+b=20;
+cout<<"obj add"<<this<<endl;//print current class obj adddress
+cout<<"a" <<this->a<<endl;
+cout<<"b"<<this->b<<endl;
+}
+};
+int main()
+{
+test t;
+cout<<&t<<endl;
+t.show();
+}
+========================
+
+#include<iostream>
+using namespace std;
+class test
+{
+int a,b;
+public:
+void show(int a,int b)
+{
+	this->a=a;
+	(*this).b=b;
+//a=a;//this->a //(*this).a=a;(pointer to member)
+//b=b;//this->b//(*this).b=b;
+
+}
+void display()
+{
+cout<<a<<b;
+}
+};
+int main()
+{
+test t;
+t.show(10,20);
+t.display();
+}
+
+-----------------------------------------------------------------------------------------------------------------------
+#include<iostream>
+using namespace std;
+class date
+{
+	int dd,mm,yy;
+	public:
+	void show();
+	date(int,int,int);
+	date();
+};
+date::date()
+{
+	this->dd=this->mm=this->yy=0;
+}
+ date::date(int dd,int mm,int yy)
+{
+	this->dd=dd;
+	this->mm=mm;
+	this->yy=yy;
+}
+ void date::show()
+ {
+	 cout<<"date is "<<this->dd<<"/"<<this->mm<<"/"<<yy<<endl;
+ }
+ int main()
+{
+	date d1(1,1,1);
+	d1.show();
+	date d2(2,2,2);
+	d2.show();
+}
+=================================================================
+
+
+
+
+
+
+
+
+
+
+STATIC  VARIABLE
+==>sometimes only one copy of a variable is required between all the objects of the same class,rather than having each object maintaining its own copy.in such case,that data members is declared as static.only one copy of static variable is created on data section and that copy is shared between all the object of the same class.Therefore static variable is called as class variable.
+==>static data members are not part of the object,they are stored seperately.
+==>Variable declared with static keyword are called as static variable.
+==> Static Variable stored on data section
+==>changes to the static variable affects all the instance of the same class.
+==>It is initialized before any object of this class is created, even before the main starts.
+==>Static members are only declared in a class declaration, not defined. They must be explicitly defined outside the class using the scope resolution operator.
+
+#include<iostream>
+using namespace std;
+class Demo
+{
+	int a;
+public:
+	static int cnt;
+public:
+	Demo()
+	{
+		a=10;
+		cnt++;
+	}
+	Demo(int a)
+	{
+		this->a=a;
+		cnt++;
+	}
+};
+//datatype classname::static variable nam=value;
+//int Demo::cnt;//memory allocation takes place
+int main()
+{
+		Demo d;
+		Demo d1(10);
+		cout<<"no of obj created is "<<Demo::cnt;
+}
+
+Static variables in a Function: When a variable is declared as static, space for it gets allocated for the lifetime of the program. Even if the function is called multiple times, space for the static variable is allocated only once and the value of the variable in the previous call gets carried through the next function call. This is useful for i application where the previous state of function needs to be stored. 
+#include <iostream>
+using namespace std;
+ void demo()
+{
+    static int count = 0;
+    cout << count << " ";
+     count++;
+}
+ int main()
+{
+    for (int i = 0; i < 5; i++)
+        demo();
+    return 0;
+}
+
+==>static variable is used to count the number of object created.
+
+STATIC FUNCTION
+1)function declare with static keyword is called as static function
+2)static function is invoked by class name
+3)syntax:
+ classname::function name();
+Memory efficient: Now we don't need to create instance for accessing the static members, so it saves memory.
+4)This pointer is not passed to the static function.therefore static mem fun cannot access non static data member.
+5)static function access only static data but a non static function can access both static as well as non static
+
+Accessing static data member
+i)if the static data member is public in the class then it can be accessed outside the class using classname::staticmembers;
+2)if it is a private variable then it can be accessed either through non static member function and static member function.
+
+=============================================================================
+The reason we need Static member function:
+1)Static members are used to store information that is shared by all objects in a class. 
+2)keep track of the quantity of newly generated objects of a specific class type using a static data member as a counter. 
+
+==================================================================================
+Ex:
+It is used to refer the common property of all objects such as rateOfInterest in case of Account, companyName in case of Employee etc.
+
+
+#include <iostream>  
+using namespace std;  
+#include<string.h>
+class Account {  
+   public:  
+       int accno;     
+       char name[10];  
+       static float rateOfInterest;   
+       Account(int accno, char* name)   
+        {    
+             this->accno = accno;    
+           strcpy(this->name,name);   
+        }    
+       void display()    
+        {    
+            cout<<accno<<"   "<<name<<"   "<<rateOfInterest<<endl;   
+        }    
+};  
+float Account::rateOfInterest=6.6;  
+int main() {  
+Account a1(201, "Sanjay"); 
+    Account a2(202, "Nakul");  
+    a1.display();    
+    a2.display();    
+    return 0;  
+} 
+
+===========================================================================================
+C++ static field example: Counting Objects
+
+#include <iostream>  
+using namespace std;  
+class complex
+{
+	int real,img;
+public:	static int cnt;
+	public:
+		complex()
+		{
+			cout<<"default is invoked\n";
+			real=5;
+			img=5;
+			cnt++;
+		}
+		complex(int real,int img)
+		{
+			cout<<"parametrized is invoked\n";
+			this->real=real;
+			this->img=img;
+			cnt++;	
+		}
+		static int getcnt()
+		{
+			return cnt;
+		}
+};
+//datatype classname::staticvar_name=value;
+int complex::cnt=0;//memory alloaction takes place
+int main()
+{
+	complex c1;
+	complex c2(10,10);
+	cout<<"no of obj created is   "<<complex::getcnt();
+	cout<<"sizeoof obj is     "<<sizeof(c1)<<endl;
+	cout<<complex::cnt;//possible only if data member is public
+}
+ ================================================
+Excercise 1:
+#include<iostream>
+using namespace std;
+class complex
+{
+	int real,img;
+	public:static const int cnt;
+	private:static const int cnt1;
+	public:
+		complex()
+		{
+			cout<<"default is invoked\n";
+			real=5;
+			img=5;
+		//	cnt++;//not allowed
+		}
+		static int getcnt()
+		{
+			return cnt1;
+		}
+};
+const int complex::cnt=5;//memory alloaction takes place
+const int complex::cnt1=10;
+int main()
+{
+	complex c1;
+	cout<<"no of obj created is   "<<complex::getcnt();
+	cout<<"sizeoof obj is     "<<sizeof(c1)<<endl;
+	cout<<complex::cnt;
+	//cout<<complex::cnt1;
+
+}
+
+Excercise 2:
+#include <iostream>
+using namespace std;
+
+class Test
+{
+	static int x;
+public:
+	Test() { x++; }
+	static int getX() {return x;}
+};
+int Test::x;
+int main()
+{
+	cout << Test::getX() << " ";
+}
+
+===================================================================
+Excercise 3:
+#include <iostream>
+using namespace std;
+ 
+class Player
+{
+private:
+    int id;
+    static int next_id;
+public:
+    int getID() { return id; }
+    Player()  {  id = next_id++; }
+};
+int Player::next_id = 1;
+ 
+int main()
+{
+  Player p1;
+  Player p2;
+  Player p3;
+  cout << p1.getID() << " ";
+  cout << p2.getID() << " ";
+  cout << p3.getID();
+  return 0;
+}
+
+#include<iostream>
+using namespace std;
+ 
+class Player
+{
+private:
+    int id;
+public:  static int next_id;
+public:
+    int getID()
+	{
+		return id; 
+	}
+    Player() 
+	{ 
+		id = next_id++;
+	}
+};
+int Player::next_id = 1;
+ 
+int main()
+{
+  Player p1;
+  Player p2;
+  Player p3;
+  cout << p1.next_id  << " ";
+  cout << p2.next_id  << " ";
+  cout << p3.next_id ;
+}
+
+
+
+Excercise 4:
+Which of the following is true?
+a)Static methods cannot be overloaded.
+b)Static data members can only be accessed by static methods.
+c)Non-static data members can be accessed by static methods.
+d)Static methods can only access static members (data and methods)
+
+=============================================================================
+Some interesting facts about static member functions in C++
+
+1)Keyword virtual cannot be used with static member functions
+2)static member functions cannot have the same name as a non static function that has same argument types within the class.
+3)A static member function can not be declared with const.
+#include<iostream>
+class Test {      
+   static void fun() const 
+   { // compiler error
+     return;
+   }
+};
+  int main()
+{
+   
+}
+
+4)'this' keyword is unavailable for static member functions
+#include <iostream>
+using namespace std;
+
+class Test
+{
+     int x;
+public:
+	Test() {
+	    x=10; }
+	static int getX() 
+	{
+	    return this->x;
+	}
+	 
+};
+int Test::x;
+int main()
+{
+	cout << Test::getX() << " ";
+}
+
+==========================================
+
+
+
+
+Excercise 4:
+
+#include<iostream>
+using namespace std;
+class temp
+{
+	public:int z;
+	static int y;
+public:
+	temp();
+	void show();
+	void display();
+};
+int x;
+int temp::y;
+void temp::show()
+{
+	y++;
+}
+temp::temp()
+{
+	int z=200;
+	x=100;
+	cout<<"value of z is "<<z<<endl;
+}
+void temp::display()
+{
+	cout<<"value of x is "<<x<<endl;
+	cout<<"value of y is  "<<y<<endl;
+}
+int main()
+{
+	temp t;
+	t.show();
+	t.show();
+	t.display();
+	cout<<t.z;
+}
+
+Excercise 5:
+
+#include<iostream>
+using namespace std;
+class item
+{
+public:
+	static int x;
+	int number;
+public:
+	void getdata(int a)
+	{
+		number=a;
+		number++;
+		x++;
+	}
+	void getcount()
+	{
+		x=10;
+		cout<<"value is "<<x<<endl;
+	}
+	void getcount_1()
+	{
+		x++;
+		cout<<"value is  "<<number<<endl;
+		cout<<"value is "<<x<<endl;
+	}
+};
+int number=9;
+int item::x;
+int main()
+{
+	item a;
+	a.getcount();
+	a.getdata(100);
+	a.getcount_1();
+	cout<<number<<endl;
+	cout<<a.number;
+}
+==============================================================
